@@ -7,40 +7,66 @@ body{
     font-family:'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif;
 }
 .menu{
-    background-color: rgb(122, 119, 119);
-    color: rgb(251, 246, 246);
-    text-align: center;
+    background-color: #2b2b2b;
+    color: #f6f6f6 ;
+    justify-content: center;
+    gap: 30px;
+    padding: 14px 20px;
 }
 .menu a{
     color: inherit;
     text-decoration: none;
-    margin: 20px;
+    font-size: 16px;
+    padding-bottom: 4px;
+    border-bottom: 2px solid transparent;
+    transition: border-color 0.4s;
+}
+.menu a{
+    border-bottom-color:#f6f6f6;
 }
 .cabeca{
-    font-size: 30px;
-    background-color: rgb(12, 11, 12);
-
+    background-color: #0c0b0c;
+    padding: 60px 20px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 10px;
 }
 .cabeca h1{
-    text-align: center;
+    font-size: 56px;
+    letter-spacing: 6px;
     color: aliceblue;
-    height: 200px;
 }
+.cabeca p{
+    color: #9aaa69;
+    font-size: 16px;
+} 
 .busca{
-    text-align: center;
+    background-color: #1f2a37;
+    padding: 20px;
+    display: 20px;
+    justify-content: center;
+    gap: 10px;
 }
 .busca input{
-    width: 300px;
-    height: 30px;
-    border-radius: 10px;
+    width: 100%;
+    max-width: 400px;
+    height: 44px;
+    padding: 0 16px;
+    border: none;
+    border-radius: 22px;
+    font-size: 16px;
 }
 .busca button{
-    border-radius: 20px;
-    width: 30px;
-    height: 30px;
-    margin: 10px;
+    width: 44px;
+    height: 44px;
+    border: none;
+    border-radius: 50px;
     cursor: pointer;
-    
+    background-color: #f5f5f5;
+}
+.busca button:hover{
+    background-color: #ddd;
 }
 .places{
     margin: 20px;
@@ -61,10 +87,10 @@ body{
     width: 250px;
     min-height: 320px;
     border-radius: 30px;
-    overflow:hidden;
+    overflow: hidden;
     border: 1px solid black;
     border-color: rgb(245, 245, 245); 
-   
+   transition: transform 0.2s, box-shadow 0.2s;
 }
 .places img{
     width:100%;
@@ -78,4 +104,8 @@ body{
     margin: 10px;
     white-space: nowrap;
     cursor: pointer;
+}
+.places article:hover{
+    transform: translateY(-4px);
+    box-shadow: 0 6px 16px rgb(0,0,0,0.15);     
 }
