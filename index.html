@@ -21,57 +21,59 @@
             <p>OS MELHORES LIVROS DIRETO NA PALMA DA SUA MÃO!</p>
         </section>
         <section class="busca">
-            <input type="text" name="busca" id="busca" placeholder="ex.. Machado de Assis"><button type="button"><img
+            <input type="text" name="busca" id="busca" placeholder="ex.. Machado de Assis"><button type="button" id="btnBusca"><img
                     src="/img/procurar.png" width="10px" alt="pesquisa"></button>
         </section>
     </header>
     <main>
+        <p id="semResultado" hidden>Nenhum livro encontrado</p>
         <section class="places" id="recentes">
             <article>
                 <img src="/img/liv.cortico.png" alt="0-Cortiço-Aluísio Azevedo">
                 <h3>O Cortiço</h3>
                 <p>Livro de Aluisio Azevedo</p>
-                <button type="button">Leia Agora</button>
+                <button type="button" onclick="window.open ('https://drive.google.com/file/d/0BwGHnXDgyRQOYjBKTFVYdWVRcVk/view?resourcekey=0-FmeTvLPgj6RK_ltYSaSZPA')">Leia Agora</button>
             </article>
             <article>
                 <img src="/img/omulato.png" alt="O Mulato - Aluisio Azevedo">
                 <h3>O Mulato</h3>
                 <p>Livro de Aluísio Azevedo</p>
-                <button type="button">Leia Agora</button>
+                <button type="button" onclick="window.open('https://drive.google.com/file/d/0B2ODxRLYQiZBUVdMTm1VamIxNms/view?usp=drive_link&resourcekey=0-3X_Kx798KmkoYU-G4iM9RA')">Leia Agora</button>
             </article>
 
             <article>
                 <img src="/img/dom.jpg" alt="Dom Casmurro - Machado de Assis">
                 <h3>Dom Casmurro</h3>
-                <p>Livro de' Machado de Assis</p>
-                <button type="button">Leia Agora</button>
+                <p>Livro de Machado de Assis</p>
+                <button type="button" onclick="window.open('https://drive.google.com/file/d/0B4KjWcTpqTHaTzg2VnhucXQ3TWc/view?usp=drive_link&resourcekey=0-9rgZWeLUm1py_FUNtOIqWw')">Leia Agora</button>
             </article>
 
             <article>
                 <img src="/img/memorias.bras.cubas.jpg" alt="Memorias Postumas de Bras Cubas">
                 <h3>Memórias Póstumas de Brás Cubas</h3>
                 <p>Livro de Machado de Assis</p>
-                <button type="button">Leia Agora</button>
+                <button type="button" onclick="window.open('https://drive.google.com/file/d/0B4KjWcTpqTHaQWpkVWVJdVJGSFk/view?usp=drive_link&resourcekey=0-2H2L4RiQ6d2SmGfVmsZQZw')">Leia Agora</button>
             </article>
 
             <article>
                 <img src="/img/o.guarani.jpg" alt="O Guarani">
                 <h3>O Guarani</h3>
                 <p>Livro de José de Alencar</p>
-                <button type="button">Leia Agora</button>
+                <button type="button" onclick="window.open('https://drive.google.com/file/d/1rx-w2ZR1UlsEMfc0HUk2ZYnbRdsDUUFo/view')">Leia Agora</button>
             </article>
 
             <article>
                 <img src="/img/A.moreninha.jpg" alt="A moreninha">
                 <h3>A Moreninha</h3>
                 <p>Livro de Joaquim Manuel</p>
-                <button type="button">Leia Agora</button>
+                <button type="button" onclick="window.open('https://drive.google.com/file/d/1aj3zDeubMZu9Sm_H6KbEU1SVGiCQ84jA/view')">Leia Agora</button>
             </article>
         </section>
     </main>
     <footer>
         <article class="info">ATENÇÃO CONTEUDO PARA FINS EDUCACIONAIS!</article>
     </footer>
+    <script src="/js/script.js"></script>
 </body>
 
 </html>
