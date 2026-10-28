@@ -31,6 +31,7 @@ btnBusca.addEventListener('click', filtrar);
 inputBusca.addEventListener('input', filtrar);
 inputBusca.addEventListener('keydown', e => {
     if (e.key === 'Enter') filtrar();
+<<<<<<< HEAD
 });
 
 const acervo =[
