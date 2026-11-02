@@ -10,65 +10,25 @@
 
 <body>
     <header id="inicio">
-        <section class="menu">
+        <nav class="menu">
             <a href="#inicio">Inicio</a>
             <a href="#sobre">Sobre</a>
             <a href="#recentes">Adicionados Recentes</a>
-            <button type="button" id="bntTema">🌙</button>
-        </section>
+            <button type="button" id="btnTema">🌙</button>
+        </nav>
         <section class="cabeca">
             <h1>ALEXANDRIA</h1>
             <p>OS MELHORES LIVROS DIRETO NA PALMA DA SUA MÃO!</p>
         </section>
         <section class="busca">
-            <input type="text" name="busca" id="busca" placeholder="ex.. Machado de Assis"><button type="button" id="btnBusca"><img
-            src="/biblioteca-virtual/img/procurar.png" width="10px" alt="pesquisa"></button>
+            <input type="text" name="busca" id="busca" placeholder="ex.. Machado de Assis">
+            <button type="button" id="btnBusca" arial-label="Buscar livro ou autor"><img
+            src="/biblioteca-virtual/img/procurar.png" width="18px" alt=""></button>
         </section>
     </header>
     <main>
         <p id="semResultado" hidden>Nenhum livro encontrado</p>
-        <section class="places" id="recentes">
-            <article>
-                <img src="/biblioteca-virtual/img/liv.cortico.png" alt="0-Cortiço-Aluísio Azevedo">
-                <h3>O Cortiço</h3>
-                <p>Livro de Aluisio Azevedo</p>
-                <button type="button" onclick="window.open ('https://drive.google.com/file/d/0BwGHnXDgyRQOYjBKTFVYdWVRcVk/view?resourcekey=0-FmeTvLPgj6RK_ltYSaSZPA')">Leia Agora</button>
-            </article>
-            <article>
-                <img src="/biblioteca-virtual/img/omulato.png" alt="O Mulato - Aluisio Azevedo">
-                <h3>O Mulato</h3>
-                <p>Livro de Aluísio Azevedo</p>
-                <button type="button" onclick="window.open('https://drive.google.com/file/d/0B2ODxRLYQiZBUVdMTm1VamIxNms/view?usp=drive_link&resourcekey=0-3X_Kx798KmkoYU-G4iM9RA')">Leia Agora</button>
-            </article>
-
-            <article>
-                <img src="/biblioteca-virtual/img/dom.jpg" alt="Dom Casmurro - Machado de Assis">
-                <h3>Dom Casmurro</h3>
-                <p>Livro de Machado de Assis</p>
-                <button type="button" onclick="window.open('https://drive.google.com/file/d/0B4KjWcTpqTHaTzg2VnhucXQ3TWc/view?usp=drive_link&resourcekey=0-9rgZWeLUm1py_FUNtOIqWw')">Leia Agora</button>
-            </article>
-
-            <article>
-                <img src="/biblioteca-virtual/img/memorias.bras.cubas.jpg" alt="Memorias Postumas de Bras Cubas">
-                <h3>Memórias Póstumas de Brás Cubas</h3>
-                <p>Livro de Machado de Assis</p>
-                <button type="button" onclick="window.open('https://drive.google.com/file/d/0B4KjWcTpqTHaQWpkVWVJdVJGSFk/view?usp=drive_link&resourcekey=0-2H2L4RiQ6d2SmGfVmsZQZw')">Leia Agora</button>
-            </article>
-
-            <article>
-                <img src="/biblioteca-virtual/img/o.guarani.jpg" alt="O Guarani">
-                <h3>O Guarani</h3>
-                <p>Livro de José de Alencar</p>
-                <button type="button" onclick="window.open('https://drive.google.com/file/d/1rx-w2ZR1UlsEMfc0HUk2ZYnbRdsDUUFo/view')">Leia Agora</button>
-            </article>
-
-            <article>
-                <img src="/biblioteca-virtual/img/A.moreninha.jpg" alt="A moreninha">
-                <h3>A Moreninha</h3>
-                <p>Livro de Joaquim Manuel</p>
-                <button type="button" onclick="window.open('https://drive.google.com/file/d/1aj3zDeubMZu9Sm_H6KbEU1SVGiCQ84jA/view')">Leia Agora</button>
-            </article>
-        </section>
+        <section class="places" id="recentes"></section>
     </main>
     <footer>
         <article class="info">ATENÇÃO CONTEUDO PARA FINS EDUCACIONAIS!</article>
