@@ -6,6 +6,7 @@ const btnBusca = document.getElementById('btnBusca');
 const semResultado = document.getElementById('semResultado');
 
 let acervo = [];
+let categoriaAtual = 'Todas';
 
 function normalizar(texto) {
     return texto
@@ -44,12 +45,40 @@ function renderizar(livros) {
 function filtrar() {
     const termo = normalizar(inputBusca.value.trim());
 
-    const resultado = acervo.filter(livro =>
-        normalizar(livro.titulo + ' ' + livro.autor).includes(termo)
-    );
+    const resultado = acervo.filter(livro => {
+        const combinaBusca = normalizar(livro.titulo + ' ' + livro.autor).includes(termo);
+        const combinaCategoria = categoriaAtual === 'Todas' || livro.categoria === categoriaAtual;
+        return combinaBusca && combinaCategoria;
+    });
 
     renderizar(resultado);
 }
+const boxCategorias = document.getElementById('categorias');
+
+function renderizarCategorias() {
+    const categorias = [...new Set(acervo.map(livro => livro.categoria).filter(Boolean))]
+        .sort((a, b) => a.localeCompare(b, 'pt-BR'));
+
+    // se a categoria escolhida deixou de existir, volta para "Todas"
+    if (!categorias.includes(categoriaAtual)) categoriaAtual = 'Todas';
+
+    boxCategorias.hidden = categorias.length === 0;
+    boxCategorias.innerHTML = ['Todas', ...categorias].map(cat => `
+        <button type="button" class="chip ${cat === categoriaAtual ? 'ativa' : ''}"
+                data-categoria="${escapar(cat)}" aria-pressed="${cat === categoriaAtual}">
+            ${escapar(cat)}
+        </button>
+    `).join('');
+}
+
+boxCategorias.addEventListener('click', (e) => {
+    const botao = e.target.closest('.chip');
+    if (!botao) return;
+
+    categoriaAtual = botao.dataset.categoria;
+    renderizarCategorias();
+    filtrar();
+});
 
 async function carregarAcervo() {
     lista.innerHTML = '<p>Carregando livros...</p>';
@@ -66,6 +95,7 @@ async function carregarAcervo() {
     }
 
     acervo = data;
+    renderizarCategorias();
     filtrar();
 }
 
