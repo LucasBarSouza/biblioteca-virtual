@@ -157,6 +157,63 @@ body {
     transform: translateY(-4px);
     box-shadow: 0 6px 16px var(--sombra);
 }
+.sobre {
+    max-width: 700px;
+    margin: 40px auto;
+    padding: 0 20px;
+    text-align: center;
+}
+
+.sobre h2 {
+    margin-bottom: 12px;
+}
+
+.sobre p {
+    line-height: 1.6;
+}
+.adicionar {
+    max-width: 500px;
+    margin: 40px auto;
+    padding: 0 20px;
+    text-align: center;
+}
+
+.adicionar form {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    margin-top: 16px;
+}
+
+.adicionar input {
+    height: 44px;
+    padding: 0 16px;
+    border: 1px solid var(--borda);
+    border-radius: 10px;
+    background: var(--card-fundo);
+    color: var(--texto);
+    font-size: 15px;
+    font-family: inherit;
+}
+
+.adicionar button {
+    height: 44px;
+    border: 1px solid var(--destaque);
+    border-radius: 10px;
+    background: transparent;
+    color: var(--destaque);
+    font-family: inherit;
+    cursor: pointer;
+}
+
+.adicionar button:hover {
+    background: var(--destaque);
+    color: var(--fundo);
+}
+
+#msgForm {
+    min-height: 1.4em;
+}
 
 .info {
     background-color: red;

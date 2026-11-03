@@ -1,46 +1,11 @@
-const acervo = [
-    {
-        titulo: 'O Cortiço',
-        autor: 'Aluísio Azevedo',
-        capa: '/biblioteca-virtual/img/liv.cortico.png',
-        link: 'https://drive.google.com/file/d/0BwGHnXDgyRQOYjBKTFVYdWVRcVk/view?resourcekey=0-FmeTvLPgj6RK_ltYSaSZPA'
-    },
-    {
-        titulo: 'O Mulato',
-        autor: 'Aluísio Azevedo',
-        capa: '/biblioteca-virtual/img/omulato.png',
-        link: 'https://drive.google.com/file/d/0B2ODxRLYQiZBUVdMTm1VamIxNms/view?usp=drive_link&resourcekey=0-3X_Kx798KmkoYU-G4iM9RA'
-    },
-    {
-        titulo: 'Dom Casmurro',
-        autor: 'Machado de Assis',
-        capa: '/biblioteca-virtual/img/dom.jpg',
-        link: 'https://drive.google.com/file/d/0B4KjWcTpqTHaTzg2VnhucXQ3TWc/view?usp=drive_link&resourcekey=0-9rgZWeLUm1py_FUNtOIqWw'
-    },
-    {
-        titulo: 'Memórias Póstumas de Brás Cubas',
-        autor: 'Machado de Assis',
-        capa: '/biblioteca-virtual/img/memorias.bras.cubas.jpg',
-        link: 'https://drive.google.com/file/d/0B4KjWcTpqTHaQWpkVWVJdVJGSFk/view?usp=drive_link&resourcekey=0-2H2L4RiQ6d2SmGfVmsZQZw'
-    },
-    {
-        titulo: 'O Guarani',
-        autor: 'José de Alencar',
-        capa: '/biblioteca-virtual/img/o.guarani.jpg',
-        link: 'https://drive.google.com/file/d/1rx-w2ZR1UlsEMfc0HUk2ZYnbRdsDUUFo/view'
-    },
-    {
-        titulo: 'A Moreninha',
-        autor: 'Joaquim Manuel de Macedo',
-        capa: '/biblioteca-virtual/img/A.moreninha.jpg',
-        link: 'https://drive.google.com/file/d/1aj3zDeubMZu9Sm_H6KbEU1SVGiCQ84jA/view'
-    }
-];
+const db = window.supabase.createClient('https://qfvjglqkefqyvgmhdysz.supabase.co', 'sb_publishable_GquFh9qHOnPAQHwK5XzT1w_KWjM17e4');
 
 const lista = document.querySelector('.places');
 const inputBusca = document.getElementById('busca');
 const btnBusca = document.getElementById('btnBusca');
 const semResultado = document.getElementById('semResultado');
+
+let acervo = [];
 
 function normalizar(texto) {
     return texto
@@ -49,16 +14,23 @@ function normalizar(texto) {
         .replace(/[\u0300-\u036f]/g, '');
 }
 
+function escapar(texto) {
+    return String(texto ?? '')
+        .replace(/&/g, '&amp;')
+        .replace(/</g, '&lt;')
+        .replace(/>/g, '&gt;')
+        .replace(/"/g, '&quot;')
+        .replace(/'/g, '&#39;');
+}
+
 function criarCard(livro) {
     return `
         <article>
-            <img src="${livro.capa}" alt="Capa de ${livro.titulo}">
+            <img src="${escapar(livro.capa)}" alt="Capa de ${escapar(livro.titulo)}">
             <div class="card-info">
-                <h3>${livro.titulo}</h3>
-                <p>Livro de ${livro.autor}</p>
-                <button class="btn-ler" onclick="window.open('${livro.link}', '_blank')">
-                    Leia Agora
-                </button>
+                <h3>${escapar(livro.titulo)}</h3>
+                <p>Livro de ${escapar(livro.autor)}</p>
+                <a class="btn-ler" href="${escapar(livro.link)}" target="_blank" rel="noopener noreferrer">Leia Agora</a>
             </div>
         </article>
     `;
@@ -79,11 +51,28 @@ function filtrar() {
     renderizar(resultado);
 }
 
+async function carregarAcervo() {
+    lista.innerHTML = '<p>Carregando livros...</p>';
+
+    const { data, error } = await db
+        .from('livros')
+        .select('*')
+        .order('id', { ascending: false });
+
+    if (error) {
+        console.error('Erro ao buscar livros:', error);
+        lista.innerHTML = '<p>Não foi possível carregar os livros.</p>';
+        return;
+    }
+
+    acervo = data;
+    filtrar();
+}
+
 btnBusca.addEventListener('click', filtrar);
 inputBusca.addEventListener('input', filtrar);
 
-renderizar(acervo);
-
+/* ---------- Tema ---------- */
 const btnTema = document.getElementById('btnTema');
 
 function aplicarTema(escuro) {
@@ -102,3 +91,34 @@ btnTema.addEventListener('click', alternarTema);
 const salvo = localStorage.getItem('tema');
 const sistemaEscuro = window.matchMedia('(prefers-color-scheme: dark)').matches;
 aplicarTema(salvo ? salvo === 'escuro' : sistemaEscuro);
+
+/* ---------- Formulário ---------- */
+const form = document.getElementById('formLivro');
+const msgForm = document.getElementById('msgForm');
+
+form.addEventListener('submit', async (e) => {
+    e.preventDefault();
+
+    const campos = form.elements;
+    const novo = {
+        titulo: campos.titulo.value.trim(),
+        autor: campos.autor.value.trim(),
+        link: campos.link.value.trim(),
+        capa: campos.capa.value.trim() || null,
+        categoria: campos.categoria.value.trim() || null
+    };
+
+    const { error } = await db.from('livros').insert(novo);
+
+    if (error) {
+        msgForm.textContent = 'Erro ao salvar: ' + error.message;
+        return;
+    }
+
+    msgForm.textContent = 'Livro adicionado!';
+    form.reset();
+    await carregarAcervo();
+});
+
+/* ---------- Início ---------- */
+carregarAcervo();
