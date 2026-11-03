@@ -171,34 +171,92 @@ body {
 .sobre p {
     line-height: 1.6;
 }
-.adicionar {
-    max-width: 500px;
-    margin: 40px auto;
-    padding: 0 20px;
-    text-align: center;
-    box-shadow: 1px 1px 1px 1px ;
-    border-radius: 8px;
+.btn-lateral {
+    position: fixed;
+    left: 0;
+    top: 50%;
+    transform: translateY(-50%);
+    z-index: 10;
+    padding: 16px 10px;
+    writing-mode: vertical-rl;
+    border: 1px solid var(--destaque);
+    border-left: none;
+    border-radius: 0 12px 12px 0;
+    background: var(--card-fundo);
+    color: var(--destaque);
+    font-family: inherit;
+    font-size: 14px;
+    cursor: pointer;
+    box-shadow: 2px 0 10px var(--sombra);
+}
+.btn-lateral:hover {
+    background: var(--destaque);
+    color: var(--fundo);
+}
+.painel {
+    inset: 0 auto 0 0;
+    margin: 0;
+    width: min(380px, 100%);
+    max-width: 100%;
+    height: 100%;
+    max-height: 100%;
+    padding: 0;
+    border: none;
+    background: var(--card-fundo);
+    color: var(--texto);
+    box-shadow: 4px 0 20px var(--sombra);
 }
 
-.adicionar form {
+.painel[open] {
+    animation: entrar 0.25s ease-out;
+}
+
+.painel::backdrop {
+    background: rgba(0, 0, 0, 0.5);
+}
+
+@keyframes entrar {
+    from { transform: translateX(-100%); }
+    to { transform: translateX(0); }
+}
+
+.painel-conteudo {
+    padding: 24px 20px;
+}
+
+.painel-topo {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 20px;
+}
+
+#btnFecharForm {
+    background: none;
+    border: none;
+    color: var(--texto);
+    font-size: 20px;
+    cursor: pointer;
+}
+
+.painel form {
     display: flex;
     flex-direction: column;
     gap: 10px;
-    margin-top: 16px;
 }
 
-.adicionar input {
+.painel input {
     height: 44px;
     padding: 0 16px;
     border: 1px solid var(--borda);
     border-radius: 10px;
-    background: var(--card-fundo);
+    background: var(--fundo);
     color: var(--texto);
     font-size: 15px;
     font-family: inherit;
 }
 
-.adicionar button {
+.painel form button {
     height: 44px;
     border: 1px solid var(--destaque);
     border-radius: 10px;
@@ -208,11 +266,10 @@ body {
     cursor: pointer;
 }
 
-.adicionar button:hover {
+.painel form button:hover {
     background: var(--destaque);
     color: var(--fundo);
 }
-
 #msgForm {
     min-height: 1.4em;
 }
@@ -246,4 +303,81 @@ body {
 #semResultado {
     text-align: center;
     margin: 30px 20px;
+}
+[hidden] {
+    display: none !important;
+}
+
+.abas {
+    display: flex;
+    gap: 8px;
+    margin-bottom: 16px;
+}
+
+.aba {
+    flex: 1;
+    height: 40px;
+    border: 1px solid var(--borda);
+    border-radius: 10px;
+    background: transparent;
+    color: var(--texto);
+    font-family: inherit;
+    cursor: pointer;
+}
+
+.aba.ativa {
+    border-color: var(--destaque);
+    color: var(--destaque);
+    font-weight: bold;
+}
+
+.lista-excluir {
+    list-style: none;
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+    max-height: 55vh;
+    overflow-y: auto;
+}
+
+.lista-excluir li {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 10px;
+    padding: 10px 12px;
+    border: 1px solid var(--borda);
+    border-radius: 10px;
+    font-size: 14px;
+}
+
+.lista-excluir small {
+    display: block;
+    opacity: 0.7;
+}
+
+.btn-excluir {
+    flex-shrink: 0;
+    padding: 6px 12px;
+    border: 1px solid #c0392b;
+    border-radius: 8px;
+    background: transparent;
+    color: #c0392b;
+    font-family: inherit;
+    cursor: pointer;
+}
+
+.btn-excluir:hover {
+    background: #c0392b;
+    color: #fff;
+}
+
+.btn-sair {
+    margin-top: 16px;
+    background: none;
+    border: none;
+    color: var(--texto);
+    text-decoration: underline;
+    font-family: inherit;
+    cursor: pointer;
 }

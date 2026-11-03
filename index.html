@@ -23,7 +23,7 @@
         <section class="busca">
             <input type="text" name="busca" id="busca" placeholder="ex.. Machado de Assis">
             <button type="button" id="btnBusca" aria-label="Buscar livro ou autor"><img
-            src="/img/procurar.png" width="18px" alt=""></button>
+            src="img/pilha-de-livros.png" width="18px" alt=""></button>
         </section>
     </header>
     <main>
@@ -34,18 +34,45 @@
     <h2>Sobre</h2>
     <p>A Alexandria é uma biblioteca virtual com clássicos da literatura brasileira, reunidos para leitura gratuita e fins educacionais.</p>
 </section>
-<section class="adicionar" id="adicionar">
-    <h2>Adicionar livro</h2>
-    <form id="formLivro">
-        <input type="text" name="titulo" placeholder="Título" required maxlength="120" aria-label="Título">
-        <input type="text" name="autor" placeholder="Autor" required maxlength="80" aria-label="Autor">
-        <input type="url" name="link" placeholder="Link para ler (https://...)" required aria-label="Link do livro">
-        <input type="text" name="capa" placeholder="Capa (opcional): https://... " aria-label="Capa">
-        <input type="text" name="categoria" placeholder="Categoria (opcional)" maxlength="40" aria-label="Categoria">
-        <button type="submit">Adicionar</button>
-        <p id="msgForm" role="status"></p>
-    </form>
-</section>
+<button type="button" id="btnAbrirForm" class="btn-lateral" aria-haspopup="dialog">Admin</button>
+
+<dialog id="painelForm" class="painel" aria-labelledby="tituloForm">
+    <div class="painel-conteudo">
+        <div class="painel-topo">
+            <h2 id="tituloForm">Área do administrador</h2>
+            <button type="button" id="btnFecharForm" aria-label="Fechar">✕</button>
+        </div>
+        <form id="formLogin">
+            <input type="email" name="email" placeholder="E-mail" required autocomplete="email" aria-label="E-mail">
+            <input type="password" name="senha" placeholder="Senha" required autocomplete="current-password" aria-label="Senha">
+            <button type="submit">Entrar</button>
+            <p id="msgLogin" role="status"></p>
+        </form>
+        <div id="areaAdmin" hidden>
+            <div class="abas" role="tablist">
+                <button type="button" role="tab" class="aba ativa" aria-selected="true" data-aba="adicionar">Adicionar</button>
+                <button type="button" role="tab" class="aba" aria-selected="false" data-aba="excluir">Excluir</button>
+            </div>
+
+            <form id="formLivro">
+                <input type="text" name="titulo" placeholder="Título" required maxlength="120" aria-label="Título">
+                <input type="text" name="autor" placeholder="Autor" required maxlength="80" aria-label="Autor">
+                <input type="url" name="link" placeholder="Link para ler (https://...)" required aria-label="Link do livro">
+                <input type="text" name="capa" placeholder="Capa (opcional)" aria-label="Capa">
+                <input type="text" name="categoria" placeholder="Categoria (opcional)" maxlength="40" aria-label="Categoria">
+                <button type="submit">Adicionar</button>
+                <p id="msgForm" role="status"></p>
+            </form>
+
+            <div id="painelExcluir" hidden>
+                <ul id="listaExcluir" class="lista-excluir"></ul>
+                <p id="msgExcluir" role="status"></p>
+            </div>
+
+            <button type="button" id="btnSair" class="btn-sair">Sair</button>
+        </div>
+    </div>
+</dialog>
     <footer>
         <article class="info">ATENÇÃO CONTEUDO PARA FINS EDUCACIONAIS!</article>
     </footer>

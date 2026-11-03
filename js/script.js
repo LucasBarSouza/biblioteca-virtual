@@ -91,8 +91,6 @@ btnTema.addEventListener('click', alternarTema);
 const salvo = localStorage.getItem('tema');
 const sistemaEscuro = window.matchMedia('(prefers-color-scheme: dark)').matches;
 aplicarTema(salvo ? salvo === 'escuro' : sistemaEscuro);
-
-/* ---------- Formulário ---------- */
 const form = document.getElementById('formLivro');
 const msgForm = document.getElementById('msgForm');
 
@@ -118,7 +116,124 @@ form.addEventListener('submit', async (e) => {
     msgForm.textContent = 'Livro adicionado!';
     form.reset();
     await carregarAcervo();
+    setTimeout(() => painelForm.close(), 1000);
+});
+
+/* ---------- Painel do formulário ---------- */
+const btnAbrirForm = document.getElementById('btnAbrirForm');
+const btnFecharForm = document.getElementById('btnFecharForm');
+const painelForm = document.getElementById('painelForm');
+
+btnAbrirForm.addEventListener('click', () => {
+    msgForm.textContent = '';
+    painelForm.showModal();
+});
+
+btnFecharForm.addEventListener('click', () => painelForm.close());
+
+// clicar no fundo escuro também fecha
+painelForm.addEventListener('click', (e) => {
+    if (e.target === painelForm) painelForm.close();
 });
 
 /* ---------- Início ---------- */
 carregarAcervo();
+const formLogin = document.getElementById('formLogin');
+const msgLogin = document.getElementById('msgLogin');
+const areaAdmin = document.getElementById('areaAdmin');
+const btnSair = document.getElementById('btnSair');
+const abas = document.querySelectorAll('.aba');
+const painelExcluir = document.getElementById('painelExcluir');
+const listaExcluir = document.getElementById('listaExcluir');
+const msgExcluir = document.getElementById('msgExcluir');
+
+function mostrarAdmin(logado) {
+    formLogin.hidden = logado;
+    areaAdmin.hidden = !logado;
+}
+
+function renderizarExclusao() {
+    if (acervo.length === 0) {
+        listaExcluir.innerHTML = '<li>Nenhum livro cadastrado.</li>';
+        return;
+    }
+
+    listaExcluir.innerHTML = acervo.map(livro => `
+        <li>
+            <span>${escapar(livro.titulo)}<small>${escapar(livro.autor)}</small></span>
+            <button type="button" class="btn-excluir" data-id="${livro.id}">Excluir</button>
+        </li>
+    `).join('');
+}
+
+function mostrarAba(nome) {
+    form.hidden = nome !== 'adicionar';
+    painelExcluir.hidden = nome !== 'excluir';
+
+    abas.forEach(aba => {
+        const ativa = aba.dataset.aba === nome;
+        aba.classList.toggle('ativa', ativa);
+        aba.setAttribute('aria-selected', ativa);
+    });
+
+    if (nome === 'excluir') {
+        msgExcluir.textContent = '';
+        renderizarExclusao();
+    }
+}
+
+abas.forEach(aba => {
+    aba.addEventListener('click', () => mostrarAba(aba.dataset.aba));
+});
+
+listaExcluir.addEventListener('click', async (e) => {
+    const botao = e.target.closest('.btn-excluir');
+    if (!botao) return;
+
+    const id = Number(botao.dataset.id);
+    const livro = acervo.find(l => l.id === id);
+
+    if (!confirm(`Excluir "${livro.titulo}"? Essa ação não pode ser desfeita.`)) return;
+
+    const { data, error } = await db.from('livros').delete().eq('id', id).select();
+
+    if (error) {
+        msgExcluir.textContent = 'Erro ao excluir: ' + error.message;
+        return;
+    }
+
+    if (data.length === 0) {
+        msgExcluir.textContent = 'Nada foi excluído. Confira se você está logado e se a policy de exclusão existe.';
+        return;
+    }
+
+    msgExcluir.textContent = 'Livro excluído.';
+    await carregarAcervo();
+    renderizarExclusao();
+});
+
+formLogin.addEventListener('submit', async (e) => {
+    e.preventDefault();
+    msgLogin.textContent = 'Entrando...';
+
+    const { error } = await db.auth.signInWithPassword({
+        email: formLogin.elements.email.value.trim(),
+        password: formLogin.elements.senha.value
+    });
+
+    if (error) {
+        msgLogin.textContent = 'E-mail ou senha incorretos.';
+        return;
+    }
+
+    formLogin.reset();
+    msgLogin.textContent = '';
+});
+
+btnSair.addEventListener('click', () => db.auth.signOut());
+
+db.auth.onAuthStateChange((evento, sessao) => {
+    mostrarAdmin(Boolean(sessao));
+});
+
+db.auth.getSession().then(({ data }) => mostrarAdmin(Boolean(data.session)));
